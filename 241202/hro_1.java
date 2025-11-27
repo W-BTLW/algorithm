@@ -21,7 +21,7 @@ class Solution {
             monster.put(attacks[i][0], attacks[i][1]);
         }
 
-        while(curHealth >= 0 && curTime != lastAttacks){
+        while(curHealth > 0 && curTime != lastAttacks){
             curTime++;  // 시간
 
             if(monster.containsKey(curTime)){  // 몬스터 공격이 있으면
@@ -30,6 +30,7 @@ class Solution {
 
               curHealth -= damage;
 
+              if (curHealth <= 0) break;  // 체력 소진하면 바로 종료
 
             } else {  // 몬스터 공격이 없으면
               // 체력 증진하장
@@ -46,6 +47,7 @@ class Solution {
                     if(curHealth >= health){
                         curHealth = health;
                     }
+                    curCombo=0;  //콤보 다시 초기화
                 }
 
             }
@@ -55,13 +57,5 @@ class Solution {
 
 
         return answer;
-    }
-
-    // public int recover(int i){
-    //     int result = i;
-
-        
-    // }
-
-    
+    }    
 }
