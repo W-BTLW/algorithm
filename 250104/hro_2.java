@@ -29,7 +29,7 @@ class Solution {
             right = Math.max(diffs[i], right);  // diffs 배열에서 가장 큰 값
         }
 
-        int answer = right;  // 가장 큰 값 기준으로 이분탐색
+        answer = right;  // 가장 큰 값 기준으로 이분탐색
 
         while (left <= right) {
             int mid = (left + right)/2;
