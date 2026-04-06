@@ -1,4 +1,12 @@
 class Solution {
+    /*
+    [[3,1]
+    ,[2,3]
+    ,[3,9]]
+
+    ["RR","Rr","RR"]
+    */
+    
     public String[] solution(int[][] queries) {
         int N = queries.length;
         String[] answer = new String[N];
