@@ -8,11 +8,11 @@ def solution(queries):
             n -= 1
             stack.append((k-1) % 4 + 1)
             k = (k-1) // 4 + 1
-            print(stack)
 
         isAdd = False
         while stack:
             parentK = stack.pop()
+            # 부모의 k가 1(RR)이거나 4(rr)이면 그 자식들은 무조건 부모랑 같음
             if parentK == 1:
                 answer.append("RR")
                 isAdd = True
