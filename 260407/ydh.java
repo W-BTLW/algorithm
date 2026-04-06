@@ -1,0 +1,68 @@
+class Solution {
+    private static final int[] dx = {0, 0, 1, -1};
+    private static final int[] dy = {1, -1, 0, 0};
+    int n,m,answer;
+    char[][] map;
+    boolean[][] visited;
+    
+    public int solution(String[] storage, String[] requests) {
+        n = storage.length;
+        m = storage[0].length();
+        answer = n * m;
+        map = new char[n][m];
+        
+        for(int i = 0; i < n; i++) {
+            map[i] = storage[i].toCharArray();
+        }
+        
+        for(String req : requests) {
+            if(req.length() == 1) { // 지게차
+                removeBoundary(req.charAt(0));
+            } else { // 크레인
+                removeAllChar(req.charAt(0));
+            }
+        }
+        
+        return answer;
+    }
+    
+    private void removeAllChar(char req) {
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                if(map[i][j] == req) {
+                    answer--;
+                    map[i][j] = 0;
+                }
+            }
+        }
+    }
+    
+    private void removeBoundary(char req) {
+        visited = new boolean[n][m];
+        // 경계선쪽 dfs
+        for(int i = 0; i < n; i++) {
+            if(!visited[i][0]) dfs(i, 0, req);
+            if(!visited[i][m-1]) dfs(i, m-1, req);
+        }
+        for(int i = 0; i < m; i++) {
+            if(!visited[0][i]) dfs(0, i, req);
+            if(!visited[n-1][i]) dfs(n-1, i, req);
+        }
+    }
+    
+    private void dfs(int x, int y, char request) {
+        visited[x][y] = true;
+        if(map[x][y] == 0) {
+            for(int i = 0; i < dx.length; i++) {
+                int lx = x + dx[i];
+                int ly = y + dy[i];
+                if(lx < 0 || ly < 0 || lx >= n || ly >= m) continue;
+                if(!visited[lx][ly]) dfs(lx, ly, request);
+            }
+        }
+        if(map[x][y] == request) {
+            answer--;
+            map[x][y] = 0;
+        }
+    }
+}
