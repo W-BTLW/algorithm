@@ -1,0 +1,6 @@
+SELECT ins.ANIMAL_ID, ins.ANIMAL_TYPE, ins.NAME
+FROM ANIMAL_INS ins, ANIMAL_OUTS outs
+where ins.ANIMAL_ID = outs.ANIMAL_ID
+AND ins.SEX_UPON_INTAKE LIKE 'Intact%'
+AND outs.SEX_UPON_OUTCOME NOT LIKE 'Intact%'
+order by ins.ANIMAL_ID
