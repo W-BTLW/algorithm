@@ -1,0 +1,29 @@
+WITH RECURSIVE GENERATIONS AS (
+    -- ① 출발점: 부모가 없는 개체에 1세대를 붙인다.
+    SELECT ID,
+           1 AS GENERATION
+    FROM ECOLI_DATA
+    WHERE PARENT_ID IS NULL
+
+    UNION ALL
+
+    -- ② 반복: 방금 찾은 개체의 자식을 찾아
+    --    부모의 세대 + 1을 붙인다.
+    SELECT E.ID,
+           G.GENERATION + 1 AS GENERATION
+    FROM ECOLI_DATA E
+    JOIN GENERATIONS G
+      ON E.PARENT_ID = G.ID
+)
+
+-- ③ 자식이 없는 개체를 세대별로 센다.
+SELECT COUNT(*) AS COUNT,
+       G.GENERATION
+FROM GENERATIONS G
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM ECOLI_DATA C
+    WHERE C.PARENT_ID = G.ID
+)
+GROUP BY G.GENERATION
+ORDER BY G.GENERATION;
